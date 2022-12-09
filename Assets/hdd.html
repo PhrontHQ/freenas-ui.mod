@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HDD Icon</title>
+    <style>
+        #icon {
+            width: 800px;
+            height: 800px;
+            border: 1px solid black;
+            perspective: 2500px;
+            transform-style: preserve-3d;
+        }
+        #hdd {
+            margin-left: -250px;
+            margin-top: -362.5px;
+            left: 50%;
+            top: 50%;
+            width: 500px;
+            height: 725px;
+            position: absolute;
+            background-size: 500px 725px;
+            background-repeat: no-repeat;
+            background-image: url(hdd.png);
+            transform: translateY(-65px) rotateX(33deg);
+            transform-style: preserve-3d;
+            transition: .5s all;
+        }
+        #icon:hover #hdd {
+            transform: translateX(0) rotateY(0);
+        }
+        #screws0 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: 500px 725px;
+            background-repeat: no-repeat;
+            background-image: url(screws.png);
+            opacity: .3;
+        }
+        #screws {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: 500px 725px;
+            background-repeat: no-repeat;
+            background-image: url(screws.png);
+            transform: translateZ(10px);
+        }
+        #bevel0 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: 500px 725px;
+            background-repeat: no-repeat;
+            background-image: url(bevel0.png);
+        }
+        #bevel1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: 500px 725px;
+            background-repeat: no-repeat;
+            background-image: url(bevel1.png);
+            transform: translateZ(20px);
+        }
+        #bevel2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: 500px 725px;
+            background-repeat: no-repeat;
+            background-image: url(bevel2.png);
+            transform: translateZ(30px);
+        }
+        #sticker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: 500px 725px;
+            background-repeat: no-repeat;
+            background-image: url(sticker.png);
+            transform: translateZ(32px);
+        }
+        #bottom {
+            position: absolute;
+            height: 150px;
+            left: 0;
+            right: 0;
+            bottom: -150px;
+            background: black;
+            transform-origin: 0 0 0;
+            transform: rotateX(-90deg);
+        }
+        #lateral {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 150px;
+            background: black;
+            transform-origin: 0 0 0;
+            transform: rotateY(90deg);
+        }
+    </style>
+</head>
+<body>
+
+<div id="icon">
+    <div id="hdd">
+        <div id="screws0"></div>
+        <div id="screws"></div>
+        <div id="bevel0"></div>
+        <div id="bevel1"></div>
+        <div id="bevel2"></div>
+        <div id="sticker"></div>
+        <div id="bottom"></div>
+        <div id="lateral"></div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+FreeNAS UI LOE
+
+* Reusable components
+    - Input field (with autocomplete option)
+    - Drop down / Combo box
+    - Button
+    - Button group
+    - Tabs
+    - Checkbox
+    - Radio button
+    - Information popup (this might be not needed)
+    - Popup window
+    - Warning/alert/confirmation popups
+    - Toggle
+    - Table
+    - Spinner / undetermined percentage progress bar
+    - Progress bar
+    - Sortable multiple select
+    - Draggable list / grid (with animations)
+    - Expand/collapse block with animation
+    - Tree (might be needed)
+
+
+* Global
+    - GL1 Events/alerts list (events and alerts might or might not be mixed)
+    - GL2 Running Tasks status list (might be mixed with events)
+    - GL3 CPU and Memory usage indicator
+    - GL4 Help/documentation viewer
+        - ixSystem has a documentation website with multiple topics, we want to be able to read from their database and display in our app a single topic in the sidebar, triggered by clicking in info icons at different places in the application. From the pure UI standpoint, this should not be a big effort, but Thibault and/or Pierre need to figure out the difficulty to access their documentation database.
+        - For the info icons at different areas in the application, we would need to know exactly where to place them and what topic in the documentation they should point to. I propose to try to do a configurable approach, in which each label and each header/title has the option to have an info icon on it, and this to be placed in an external json file easy to configure.
+        - Offline docs only for setup and some debugging, rest online
+    - GL5 Mostly all forms in the application will have 2 formats: collapsed/simplified and expanded/advanced. Collapsed will show the minimal configuration, hidding the advanced options. A button will allow to switch from collapsed to expanded and reveal the advanced options. We need a Form component to easily do this and that will be reused in all the application.
+
+* DA0 Dashboard
+    - Multiple Widgets
+        - DA1 One Summary widget
+        - DA2 One Chart component with multiple configurations and multiple data (CPU, RAM, processess, etc)
+            - UI effort for this one will be constant.
+            - The amount of data sources affect Thibault's estimate.
+        - DA3 One Optional: name your peers
+            - I forgot to ask more information about this one, but it should be low priority
+    - DA4 Palette of widgets
+    - DA5 Widget stage system
+        - Add widgets (drag and drop)
+        - Move widgets (drag and drop)
+        - Delete widgets
+        - Resize widgets
+
+
+* Storage
+    - ST1 If no pools created, ui shows "Create Storage" message.
+    - ST2 Pools list
+    - Create Pool
+        - ST3 Additional effort to polish previous version
+        - ST4 Filesystem setup after topology defined
+            - ST4.1 Setup form
+            - ST4.2 Permissions list, editable
+    - Shares
+        - ST5 Shares tree
+            - A pool has multiple shares. A share can have nested shares, so each pool have a tree of shares, being itself the root - well, to be exact it is the pool volume the root, but no difference from UI.
+            - Each share has a dataset or volume associated as 1:1, from UI stand point, a share and a dataset/volume is the same thing.
+        - ST6 Add/modify NFS form
+        - ST7 Add/modify SMB form
+        - ST8 Add/modify AFP form
+        - ST9 Add/modify WebDAV form
+        - ST10 Add/modify iSCSI section
+            - Global config form
+            - Portals List
+                - Portal form
+            - Initiators List
+                - Initator form
+            - Authorizations
+                - Authorization form
+            - Targets List
+                - Target form
+            - Extents List
+                - Extent form
+            - Associated Targets List
+                - Associated Target form
+        - ST30 Add/modify SSH form
+        - ST31 Add/modify SCP form
+        - ST32 Add/modify FTP form
+        - ST33 Add/modify TFTP form
+        - ST34 Add/modify RSYNC form
+        - ST35 Add/modify IPFS
+        - ST36 Add/modify Riak
+            - Riak
+            - Riak CS
+            - Stanchion
+            - HAProxy
+        - ST37 Add/modify Gluster
+        - ST38 Add/modify Swift
+        - ST39 Add/modify UPS
+        - ST40 Add/modify LLDP
+        - ST41 Add/modify SNMP
+        - ST42 ADD/modify Domain Controller
+    - ST11 Import old volumes form
+    - ST12 Extend a volume
+        - ST13 Warning about bad ideas
+    - ST14 Export a volume form
+    - Drive replacement
+        - ST15 Warning on drive swapping problems
+        - ST16 Drive replacement method form
+    - ST17 Snapshots
+        - ST18 Pool snapshots
+            - List of snapshots
+                - Delete snapshot
+                - Clone snapshot (creating a new pool/dataset)
+                - Is it possible to clone snapshot into its owner pool/dataset?
+                - Create instant snapshot
+                - ST18.5 VMWare snapshot form
+            - List of pending scheduled snapshots
+                - Delete snapshot
+                - Schedule new snapshot form
+        - ST19 Share snapshots
+            - Same as pool snapshots
+    - ST20 Replication
+        - Replication form
+        - Instant replication
+            - Replication form
+        - Scheduled replication
+            - Based on scheduled snapshots (need more info on this)
+    - ST21 Scrub
+        - Prevent scrub for N days
+        - Instant scrub
+            - Assumed to be blocked if scrub was prevented, alert mentioning it?
+        - Scheduled scrubs list
+            - Delete scheduled scrub
+            - Add scheduled scrub form
+            - What happens if scheduled scrub happens during scrub prevention time?
+
+
+* NE0 Network
+    - NE1 Global settings form
+    - NE2 Interface list
+    - NE3 LAGGs List
+        - LAGG form
+    - NE4 VLAN List
+        - VLAN form
+
+
+* Calendar
+    - Switch view calendar / all events list
+    - Some code can be reused from previous implementation of calendar view
+    - CA1 All events list (a bit tricky with the recurring events)
+    - CA2 Calendar shows icons inside its days for events
+    - CA3 Ability to drag and drop events
+    - CA4 Day details (to see detailed list of all events)
+    - CA5 Event details (to delete event, modify it)
+    - CA6 Palette of events to add to the calendar
+        - CA6.1 Schedule snapshots reuses ST17 new snapshot form + target pool/share
+        - CA6.2 Schedule scrub reuses ST21 new scrub form + target pool
+        - Rsync tasks
+        - SMART test
+        - Replication
+        - Check update
+        - Reporting emails
+        - Arbitrary scrips
+
+
+* Console
+    - CO1 Assumed we can reuse their code with minimal effort
+
+
+* System
+    - SY1 Display detailed information about the system/hardware
+    - We can probably reuse previous code
+    - Disk details/edit form
+    - Time/uptime/version/hostname
+
+
+* Settings
+    - Sharing (Global configuration forms)
+        - SE1 AFP
+        - SE2 SMB
+        - SE3 NFS
+        - SE4 WebDAV
+        - SE5 iSCSI
+    - Direct Connection Services
+        - SE6 SSH
+        - SE7 FTP
+        - SE8 TFTP
+        - SE9 SCP
+    - Backup Services
+        - SE10 rsync
+    - Other Services
+        - SE11 UPS
+        - SE12 LLDP
+        - SE13 SNMP
+        - SE14 Domain Controller
+    - Clustering services
+        - Needs design from ixSystems to be better defined
+    - Security
+        - SE15 Assumed to be a form
+    - Certificates
+        - SE16 Assumed to have a list of certificates
+        - SE17 Ability to create 4 different types of certificates (forms)
+    - SE18 Bug Report form
+    - SE19 Reporting emails form
+    - SE20 Boot pool / updates
+        - SE20.1 Scrub boot pool
+        - SE20.2 Check ZFS status
+        - SE20.3 Snapshots
+            - List of snapshots
+            - Inmediate snapshot
+            - Delete snapshot
+            - Scheduled snapshots for SU
+        - SE20.4 Reboot/shutdown
+            - Form with list of scripts to run at boot/shutdown
+        - SE20.5 Updates
+            - Update train list
+            - Choose update train (with warning)
+            - Check for updates
+            - Updates list
+            - Display update description
+                - Changelog
+                - Download update (as snapshot?)
+                - Install update
+                    - Reboot after update
+                - Rollback update
+            - Upgrade fom FreeNAS 9.x
+    - SE21 Database backups list
+        - Import settings database
+        - Reset settings database
+        - Create settings database backup?
+        - Delete settings database backup
+    - SE22 System tunables form
+    - SE23 Time
+        - Timezone form
+        - Time server form
+    - SE24 Application settings
+        - Connection status form with ip addresses list
+        - Localization (for SU)
+        - Dev Mode (for us, if needed)
+    - SE25 CLI settings form
+    - SE26 Serial console settings form
+
+
+* AC0 Accounts
+    - Update Users/Groups details form from previous version
+    - Add secondray group list to users
+    - AC3 Directory services
+        - AD form
+        - LDAP form
+        - NIS form
+        - NT4 form (for SU)
+        - Kerberos forms (3 forms + 2 lists)
+
+
+* Setup Wizard
+    - Visual Design
+    - ~6 Steps
+
+
+* MN1 Multi-node Management
+    - Design and middleware needs to be finished
+    - Ability to manage multiple FreeNAS instances at a time.
+    - Initial development could be only an editable list of FreeNASes in the same GUI, plus a global switch (maybe a dropbox) to switch from information from one to other. We should develop our application thinking in the possibility of handling multiple instances of FreeNAS since the start to avoid future complications.
+
+
+* Peering UI
+    - Design and middleware needs to be finished
+    - For services that require pairing/peering and that are painful to configure by hand, a new UI/middleware service will be developed that helps with this task. It is related to the multi-node management.

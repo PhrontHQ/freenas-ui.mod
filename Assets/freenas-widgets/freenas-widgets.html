@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        html, body {
+            margin: 0;
+            border: 0;
+            padding: 0;
+        }
+        #main {
+            min-height: 100%;
+            background-size: auto auto, 310px 310px;
+            background-image:
+                radial-gradient(
+                    circle farthest-corner at center -5%,
+                    rgba(255, 255, 255, .1),
+                    rgba(0, 0, 0, .1)
+                ),
+                url(brushed-metal.gif);
+            padding: 56px;
+        }
+        h1 {
+            font-weight: 300;
+            font-size: 38px;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 45px;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, .35);
+        }
+        label {
+            float: left;
+            padding-top: 8px;
+            display: block;
+            width: 200px;
+            font-weight: 200;
+            font-size: 16px;
+            color: rgba(255, 255, 255, .8);
+        }
+        .field {
+            min-height: 60px;
+        }
+        input {
+            background: rgba(0, 0, 0, .25);
+            border: none;
+            height: 34px;
+            font-size: 16px;
+            font-weight: 300;
+            padding: 0 10px;
+            margin: 0;
+            border-radius: 4px;
+            border-top: 1px solid rgba(0, 0, 0, .23);
+            border-bottom: 1px solid rgba(255, 255, 255, .15);
+            outline: none;
+            color: white;
+        }
+        textarea {
+            width: 260px;
+            height: 90px;
+            background: rgba(0, 0, 0, .25);
+            border: none;
+            font-size: 16px;
+            font-weight: 300;
+            padding: 10px;
+            margin: 0;
+            border-radius: 4px;
+            border-top: 1px solid rgba(0, 0, 0, .24);
+            border-bottom: 1px solid rgba(255, 255, 255, .14);
+            outline: none;
+            color: white;
+            resize: none;
+            margin-bottom: 22px;
+        }
+        .selectWrapper {
+            display: inline-block;
+            position: relative;
+            -webkit-user-select: none;
+        }
+        .selectWrapper:after {
+            content: "▾";
+            text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
+            text-align: center;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            width: 23px;
+            height: 23px;
+            display: block;
+            background: white;
+            border-radius: 2px;
+            background-color: #666;
+            background-image: linear-gradient(to bottom, #666, #505050);
+            border-bottom: 1px solid rgba(0, 0, 0, .36);
+            border-top: 1px solid rgba(255, 255, 255, .21);
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .selectWrapper:hover:after {
+            background-image: linear-gradient(to bottom, #777, #606060);
+        }
+        .selectWrapper:hover .select {
+            background-color: rgba(0, 0, 0, .17);
+        }
+        .selectWrapper.expanded:after {
+            background-image: linear-gradient(to bottom, #0095d5, #0076a9);
+        }
+        .select {
+            position: relative;
+            background: rgba(0, 0, 0, .25);
+            border: none;
+            height: 32px;
+            line-height: 30px;
+            font-size: 16px;
+            font-weight: 300;
+            padding: 0 44px 0 10px;
+            margin: 0;
+            border-radius: 4px;
+            border-top: 1px solid rgba(0, 0, 0, .23);
+            border-bottom: 1px solid rgba(255, 255, 255, .15);
+            outline: none;
+            color: white;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+        .selectWrapper.expanded .options {
+            display: block;
+        }
+        .options {
+            display: none;
+            position: absolute;
+            margin-top: -1px;
+            background: rgba(90, 90, 90, 1);
+            padding: 6px 0;
+            border-radius: 4px;
+            box-shadow: 0 0 6px rgba(0, 0, 0, .5);
+            cursor: pointer;
+        }
+        .option {
+            padding: 0 43px 0 10px;
+            font-weight: 300;
+            line-height: 34px;
+            color: white;
+        }
+        .option:hover {
+            background: rgba(105, 105, 105, 1);
+        }
+        .option.selected {
+            background: #0095d5;
+            cursor: default;
+        }
+        button {
+            text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
+            text-align: center;
+            height: 42px;
+            padding: 0 26px;
+            font-size: 14px;
+            line-height: 14px;
+            font-weight: 300;
+            -webkit-appearance: none;
+            color: white;
+            background: white;
+            border-radius: 4px;
+            border: 0;
+            pointer-events: none;
+            background-color: #666;
+            background-image: linear-gradient(to bottom, #666, #505050);
+            border-bottom: 1px solid rgba(0, 0, 0, .36);
+            border-top: 1px solid rgba(255, 255, 255, .21);
+            box-sizing: border-box;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+            margin-right: 5px;
+        }
+        .submit {
+            background-image: linear-gradient(to bottom, #0095d5, #0076a9);
+        }
+        table {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, .4);
+            /*box-shadow: inset 0 0 15px rgba(0, 0, 0, .3);*/
+        }
+        th, td {
+            text-align: left;
+            height: 50px;
+            padding-left: 40px;
+            padding-right: 60px;
+            cell-spacing: 0;
+            font-weight: 200;
+        }
+        th {
+            font-weight: 400;
+        }
+        .header {
+            background: rgba(0, 0, 0, .35);
+        }
+        tr:nth-child(even) {
+            background: rgba(0, 0, 0, .07);
+        }
+        table.table2 {
+            border: 0;
+        }
+        table.table2 th {
+            background-image: linear-gradient(to bottom, #666, #505050);
+        }
+        table.table2 tr {
+            background: rgba(0, 0, 0, .25);
+        }
+        table.table2 tr:nth-child(odd) {
+            background: rgba(0, 0, 0, .2);
+        }
+        #progress {
+            position: relative;
+            background: rgba(0, 0, 0, .25);
+            border: none;
+            height: 10px;
+            width: 150px;
+            font-size: 16px;
+            font-weight: 300;
+            padding: 0 10px;
+            margin: 0;
+            border-radius: 10px;
+            border-top: 1px solid rgba(0, 0, 0, .23);
+            border-bottom: 1px solid rgba(255, 255, 255, .15);
+            outline: none;
+            color: white;
+        }
+        #progress-percentage {
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+        }
+        #progress-percentage div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, .36);
+            border-top: 1px solid rgba(255, 255, 255, .21);
+            background-image: linear-gradient(to bottom, #0095d5, #0076a9);
+        }
+        #progress-percentage {
+            overflow: hidden;
+            animation-name: foo;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+        }
+        #progress-percentage div {
+            animation-name: bar;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+        }
+        @keyframes foo {
+            from {
+                transform: translate3d(-100%, 0, 0);
+            }
+            to {
+                transform: translate3d(0, 0, 0);
+            }
+        }
+        @keyframes bar {
+            from {
+                transform: translate3d(100%, 0, 0);
+            }
+            to {
+                transform: translate3d(0, 0, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main">
+    <h1>Management Connection</h1>
+    <div class="field">
+        <label>Protocol</label>
+        <div class="selectWrapper" id="sel">
+            <div class="select">HTTPS</div>
+            <div class="options">
+                <div class="option">Foo</div>
+                <div class="option">Foobar</div>
+                <div class="option selected">HTTPS</div>
+                <div class="option">HTTP</div>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>HTTPS Port</label>
+        <input value="80" style="width: 70px">
+    </div>
+    <div class="field">
+        <label>SSL/TSL Certificate</label>
+        <textarea></textarea>
+    </div>
+    <div class="field">
+        <label>Redirect HTTP to HTTPS</label>
+        <input style="height: 26px; width: 6px; background-image: url(checkmark.png); background-size: 19px 14px; background-repeat: no-repeat; background-position: center center;">
+        &nbsp;&nbsp;&nbsp;&nbsp;<input style="height: 26px; border-radius: 50px; width: 6px; background-image: url(circle.png); background-size: 12px 12px; background-repeat: no-repeat; background-position: center 6px;">
+    </div>
+    <div class="field">
+        <label></label>
+        <button>Cancel</button>
+        <button class="submit">Submit</button>
+    </div>
+    <div class="field">
+        <label>Table Version 1</label>
+        <table cellpadding="0" cellspacing="0">
+            <tr class="header">
+                <th>Countries</th>
+                <th>Capitals</th>
+                <th>Population</th>
+                <th>Language</th>
+            </tr>
+            <tr>
+                <td>USA</td>
+                <td>Washington D.C.</td>
+                <td>309 million</td>
+                <td>English</td>
+            </tr>
+            <tr>
+                <td>Sweden</td>
+                <td>Stockholm</td>
+                <td>9 million</td>
+                <td>Swedish</td>
+            </tr>
+            <tr>
+                <td>Spain</td>
+                <td>Madrid</td>
+                <td>45 million</td>
+                <td>Spanish</td>
+            </tr>
+            <tr>
+                <td>Japan</td>
+                <td>Tokio</td>
+                <td>100 million</td>
+                <td>Japanese</td>
+            </tr>
+        </table>
+    </div>
+    <div class="field">
+        <label>Table Version 2</label>
+        <table cellpadding="0" cellspacing="0" class="table2">
+            <tr class="header">
+                <th>Countries</th>
+                <th>Capitals</th>
+                <th>Population</th>
+                <th>Language</th>
+            </tr>
+            <tr>
+                <td>USA</td>
+                <td>Washington D.C.</td>
+                <td>309 million</td>
+                <td>English</td>
+            </tr>
+            <tr>
+                <td>Sweden</td>
+                <td>Stockholm</td>
+                <td>9 million</td>
+                <td>Swedish</td>
+            </tr>
+            <tr>
+                <td>Spain</td>
+                <td>Madrid</td>
+                <td>45 million</td>
+                <td>Spanish</td>
+            </tr>
+            <tr>
+                <td>Japan</td>
+                <td>Tokio</td>
+                <td>100 million</td>
+                <td>Japanese</td>
+            </tr>
+        </table>
+    </div>
+    <div class="field">
+        <div id="progress"><div id="progress-percentage"><div></div></div></div>
+    </div>
+</div>
+
+<script>
+    sel.onclick = function () {
+        if (sel.classList.contains("expanded")) {
+            sel.classList.remove("expanded");
+        } else {
+            sel.classList.add("expanded");
+        }
+    }
+</script>
+
+</body>
+</html>

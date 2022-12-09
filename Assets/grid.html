@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+<canvas id="c" style="border: 1px solid black"></canvas>
+
+<script>
+
+var tetris,
+    rectangles = [
+        [0, 0, 3, 2],
+        [5, 5, 2, 1]
+    ];
+
+function drawTetris() {
+    var context,
+        rect,
+        x, y, foo,
+        i, j, k;
+
+    for (j = 0; j <= rectangles.length; j++) {
+        tetris = [];
+        for (i = 0; i < rectangles.length; i++) {
+            rect = rectangles[i];
+            for (y = rect[1]; y < rect[1] + rect[3]; y++) {
+                for (x = rect[0]; x < rect[0] + rect[2]; x++) {
+                    tetris[y * 60 + x] = i + 1;
+                }
+            }
+        }
+        for (i = 0; i < rectangles.length; i++) {
+            rect = rectangles[i];
+            y = rect[1] - 1;
+            foo = 0;
+            while (y >= 0) {
+                for (x = rect[0]; x < rect[0] + rect[2]; x++) {
+                    tetris[y * 60 + x] = i + 1;
+                }
+                y--;
+            }
+        }
+    }
+    c.width = 960;
+    c.height = 600;
+    context = c.getContext("2d");
+    for (y = 0; y < 20; y++) {
+        for (x = 0; x < 60; x++) {
+            if (tetris[y * 60 + x]) {
+                context.fillStyle = "hsl(" + (tetris[y * 60 + x] * 31) + ",90%,40%)";
+                context.fillRect(x * 16, y * 16, 16, 16);
+            }
+        }
+    }
+}
+drawTetris();
+
+</script>
+
+
+</body>
+</html>
