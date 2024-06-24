@@ -17,7 +17,7 @@ var processors = [
                 "extends": "stylelint-config-standard",
             },
             plugins: [
-                "stylelint-declaration-strict-value"
+             ulpfile   "stylelint-declaration-strict-value"
             ],
             rules: {
                 "number-leading-zero": null,
